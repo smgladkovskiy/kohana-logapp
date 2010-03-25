@@ -1,11 +1,11 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 /**
- * Jelly Model log
+ * Model Jelly Log Model
  *
  * @author avis <smgladkovskiy@gmail.com>
  */
-class Model_Log extends Jelly_Model {
+class Model_Log_Jelly extends Jelly_Model {
 
 	/**
 	 * Initializating model meta information
@@ -25,11 +25,15 @@ class Model_Log extends Jelly_Model {
 				)),
 				'type' => new Field_BelongsTo(array(
 					'label' => __('Событие'),
-					'foreign' => 'log_types',
+					'model' => 'log_type_jelly',
+					'foreign' => 'log_type_jelly',
+					'column' => 'type_id',
 				)),
 				'result' => new Field_BelongsTo(array(
 					'label' => __('Результат'),
-					'foreign' => 'log_results',
+					'model' => 'log_result_jelly',
+					'foreign' => 'log_result_jelly',
+					'column' => 'result_id'
 				)),
 				'user' => new Field_BelongsTo(array(
 					'label' => __('Пользователь')
@@ -40,7 +44,7 @@ class Model_Log extends Jelly_Model {
              ))
 			 ->load_with(array(
 				'type',
-				//'result',
+				'result',
 			 ));
     }
 } // End Jelly Model Log
