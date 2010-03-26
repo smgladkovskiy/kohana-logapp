@@ -45,6 +45,7 @@ class Model_Log_Jelly extends Jelly_Model {
 			 ->load_with(array(
 				'type',
 				'result',
+				'user'
 			 ));
     }
 } // End Jelly Model Log

@@ -1,4 +1,19 @@
+# Logapp
+
 Logapp is a module to make application logs (for example, users login/logout, adding/deleting/editing information etc.).
+
+## Quick Start
+
+* Place logapp module to modules folder;
+* Enable logapp module in bootstrap.php;
+* Copy-paste logap config to you application/config folder;
+* Build database tables.
+
+To start logging call Logapp instance method write():
+
+	Logapp::instance()->write($tog_type, $log_result, $log_description)
+
+Logapp remembers tog_types adn log_results automaticly. You don't need to fill certain tables before using this helper.
 
 ## Database structure
 

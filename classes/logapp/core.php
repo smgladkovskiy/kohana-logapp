@@ -1,10 +1,9 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 /**
- * Controller Logapp
+ * Logapp class for logging application actions
  *
  * @author avis <smgladkovskiy@gmail.com>
- *
  * @todo implement data caching
  */
 abstract class Logapp_Core {
@@ -49,4 +48,27 @@ abstract class Logapp_Core {
 		$this->_get_namespaces('log_results');
 	}
 
-} // End Controller Log
+	/**
+	 * Writing a log issue
+	 *
+	 * @param string  $type
+	 * @param string  $result
+	 * @param integer $user
+	 * @param string  $description
+	 */
+	public function write($type, $result, $user = NULL, $description = NULL)
+	{
+		if( ! arr::get(Logapp::$log_types, $type))
+		{
+			$this->_set_namespace_item($type, 'log_types');
+		}
+
+		if( ! arr::get(Logapp::$log_results, $result))
+		{
+			$this->_set_namespace_item($result, 'log_results');
+		}
+
+		$this->_write_log($type, $result, $user, $description);
+	}
+
+} // End Logapp_Core

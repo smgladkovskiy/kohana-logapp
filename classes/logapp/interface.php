@@ -1,21 +1,11 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 /**
- * Class Logapp_Interface
+ * Logapp Interface for driver implementation
  *
  * @author avis <smgladkovskiy@gmail.com>
  */
 interface Logapp_Interface {
-
-	/**
-	 * Writing a log issue
-	 *
-	 * @param string $type
-	 * @param string $result
-	 * @param integer $user
-	 * @param string $description
-	 */
-	public function write ($type, $result, $user = NULL, $description = NULL);
 
 	/**
 	 * Watching last Log issues
@@ -39,5 +29,15 @@ interface Logapp_Interface {
 	 * @param string $section
 	 */
 	public function _set_namespace_item($item, $section);
+
+	/**
+	 * Writing a log issue
+	 *
+	 * @param string $type
+	 * @param string $result
+	 * @param integer $user
+	 * @param string $description
+	 */
+	public function _write_log($type, $result, $user = NULL, $description = NULL);
 	
 } // End Class Logapp_Interface

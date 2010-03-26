@@ -1,11 +1,11 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 /**
- * Logapp Driver for Jelly ORM
+ * Logapp Driver for Sprig ORM
  *
  * @author avis <smgladkovskiy@gmail.com>
  */
-class Logapp_Driver_Jelly extends Logapp implements Logapp_Interface {
+class Logapp_Driver_Sprig extends Logapp implements Logapp_Interface {
 
 	/**
 	 * Watching last Log issues
@@ -15,10 +15,10 @@ class Logapp_Driver_Jelly extends Logapp implements Logapp_Interface {
 	 */
 	public function watch($limit = 10)
 	{
-		$_logs = Jelly::select('log_jelly')
-			->limit((int) $limit)
+		$query = DB::select()->limit((int) $limit)
 			->order_by('id', 'DESC');
-		$logs = $_logs->execute();
+		$logs = Sprig::factory('log_sprig')
+			->load($query);
 		return $logs;
 	}
 
@@ -29,8 +29,8 @@ class Logapp_Driver_Jelly extends Logapp implements Logapp_Interface {
 	 */
 	public function _get_namespaces($type)
 	{
-		$namespaces = Jelly::select(Inflector::singular($type).'_jelly')
-			->execute();
+		$namespaces = Sprig::factory(Inflector::singular($type).'_sprig')
+			->load();
 
 		foreach ($namespaces as $namespace)
 		{
@@ -47,10 +47,11 @@ class Logapp_Driver_Jelly extends Logapp implements Logapp_Interface {
 	 */
 	public function _set_namespace_item($item, $section)
 	{
-		$_item = Jelly::factory(Inflector::singular($section).'_jelly')
-			->set(array(
+		$item = Sprig::factory(Inflector::singular($section).'_sprig',
+			array(
 				'name' => $item
-			))->save();
+			));
+		$item->create();
 
 		Logapp::${$section}[$item] = $_item->id;
 	}
@@ -65,14 +66,15 @@ class Logapp_Driver_Jelly extends Logapp implements Logapp_Interface {
 	 */
 	public function _write_log($type, $result, $user = NULL, $description = NULL)
 	{
-		Jelly::factory('log_jelly')
-			->set(array(
+		$log = Sprig::factory('log_sprig',
+			array(
 				'time' => time(),
 				'type' => arr::get(Logapp::$log_types, $type),
 				'result' => arr::get(Logapp::$log_results, $result),
 				'user' => $user,
 				'description' => __($description)
-			))->save();
+			));
+		$log->create();
 	}
 
 } // End Logapp_Driver_Jelly
