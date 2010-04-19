@@ -1,8 +1,9 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct access allowed.');
 
 /**
  * Logapp Driver for Sprig ORM
  *
+ * @package Logapp
  * @author avis <smgladkovskiy@gmail.com>
  */
 class Logapp_Driver_Sprig extends Logapp implements Logapp_Interface {
@@ -77,4 +78,85 @@ class Logapp_Driver_Sprig extends Logapp implements Logapp_Interface {
 		$log->create();
 	}
 
-} // End Logapp_Driver_Jelly
+	/**
+	 * Setting table lock. It can be used to prevent
+	 * edditing table record by many people in CMS
+	 *
+	 * @param  string  $table_name
+	 * @param  integer $record_id
+	 * @param  integer $user_id
+	 * @return object/FALSE
+	 */
+	public function _set_lock($table_name, $record_id, $user_id)
+	{
+		$lock = Sprig::factory('lock_sprig', array(
+			'time' => time(),
+			'table_name' => $table_name,
+			'table_record' => $record_id,
+			'user' => $user_id
+		))->create();
+		if($lock->saved())
+		{
+			return $lock;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	/**
+	 * Getting table lock if it exists
+	 *
+	 * @param  string  $table_name
+	 * @param  integer $record_id
+	 * @return object/FALSE
+	 */
+	public function get_lock($table_name, $record_id)
+	{
+		$query = DB::select()
+			->where('table_name', '=', $table_name)
+			->where('table_record', '=', $record_id);
+		$logs = Sprig::factory('lock_sprig')
+			->load($query);
+		
+		if($lock->loaded())
+		{
+			return $lock;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	/**
+	 * Clears table lock
+	 *
+	 * @param  integer $lock
+	 * @return boolean
+	 */
+	public function _clear_lock($lock_id)
+	{
+		if(Sprig::factory('lock_sprig')->delete($lock_id))
+			return TRUE;
+
+		return FALSE;
+	}
+
+	/**
+	 * Clears all table locks
+	 *
+	 * @return boolean
+	 */
+	public function _clear_all_locks()
+	{
+		$locks = Sprig::factory('lock_sprig')->load();
+		foreach($locks as $lock)
+		{
+			Sprig::factory('lock_sprig')->delete($lock->id);
+		}
+		return TRUE;
+	}
+
+} // End Logapp_Driver_Sprig

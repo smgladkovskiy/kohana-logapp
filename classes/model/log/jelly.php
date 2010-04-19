@@ -1,8 +1,9 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct access allowed.');
 
 /**
  * Model Jelly Log Model
  *
+ * @package Logapp
  * @author avis <smgladkovskiy@gmail.com>
  */
 class Model_Log_Jelly extends Jelly_Model {

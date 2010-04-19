@@ -1,8 +1,9 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct access allowed.');
 
 /**
  * Sprig Model sprig
  *
+ * @package Logapp
  * @author avis <smgladkovskiy@gmail.com>
  */
 class Model_Log_Type_Sprig extends Sprig {
