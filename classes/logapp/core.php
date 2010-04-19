@@ -8,22 +8,22 @@
  */
 abstract class Logapp_Core {
 
-	// Log instance
+	// Logapp instance
 	protected static $instance;
 
 	// Logapp config
 	protected $_config;
 
-	// Log types array
+	// Logapp types array
 	protected static $log_types = array();
 
-	// Log results array
+	// Logapp results array
 	protected static $log_results = array();
 
 	/**
-	 * Creates a singleton of a Log Class.
+	 * Creates a singleton of a Logapp Class.
 	 *
-	 * @return  Log
+	 * @return  Logapp
 	 */
 	public static function instance()
 	{

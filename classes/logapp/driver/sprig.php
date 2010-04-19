@@ -112,7 +112,7 @@ class Logapp_Driver_Sprig extends Logapp implements Logapp_Interface {
 	 * @param  integer $record_id
 	 * @return object/FALSE
 	 */
-	public function get_lock($table_name, $record_id)
+	public function _get_lock($table_name, $record_id)
 	{
 		$query = DB::select()
 			->where('table_name', '=', $table_name)

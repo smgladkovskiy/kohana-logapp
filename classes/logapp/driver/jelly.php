@@ -110,7 +110,7 @@ class Logapp_Driver_Jelly extends Logapp implements Logapp_Interface {
 	 * @param  integer $record_id
 	 * @return object/FALSE
 	 */
-	public function get_lock($table_name, $record_id)
+	public function _get_lock($table_name, $record_id)
 	{
 		$lock = Jelly::select('lock_jelly')
 			->where('table_name', '=', $table_name)
