@@ -39,10 +39,10 @@ To work with table locking:
 	CREATE TABLE IF NOT EXISTS `locks` (
 	  `id` int(10) unsigned NOT NULL auto_increment,
 	  `time` int(10) unsigned NOT NULL COMMENT 'timestamp',
-	  `table_name` varchar(20) unsigned NOT NULL,
+	  `table_name` varchar(20) NOT NULL,
 	  `table_record` smallint(5) unsigned NOT NULL,
 	  `user_id` smallint(5) unsigned default NULL,
-	  PRIMARY KEY  (`id`),
+	  PRIMARY KEY (`id`),
 	  KEY `fk_lock_user` (`user_id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
@@ -53,7 +53,7 @@ To work with table locking:
 	  `result_id` smallint(5) unsigned NOT NULL,
 	  `user_id` smallint(5) unsigned default NULL,
 	  `description` text NOT NULL,
-	  PRIMARY KEY  (`id`),
+	  PRIMARY KEY (`id`),
 	  KEY `fk_log_user` (`user_id`),
 	  KEY `fk_log_result` (`result_id`),
 	  KEY `fk_log_type` (`type_id`)
@@ -62,14 +62,14 @@ To work with table locking:
 	CREATE TABLE IF NOT EXISTS `log_results` (
 	  `id` smallint(5) unsigned NOT NULL auto_increment,
 	  `name` varchar(64) NOT NULL,
-	  PRIMARY KEY  (`id`)
+	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
 	CREATE TABLE IF NOT EXISTS `log_types` (
 	  `id` smallint(5) unsigned NOT NULL auto_increment,
 	  `name` varchar(64) NOT NULL,
-	  PRIMARY KEY  (`id`)
+	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 	ALTER TABLE `logs`
